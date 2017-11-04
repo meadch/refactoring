@@ -61,21 +61,21 @@ class Customer
   end
 
   def amount_for(rental)
-    this_amount = 0
+    result = 0
     case rental.movie.price_code
     when Movie.REGULAR
-      this_amount += 2.0
+      result += 2.0
       if rental.days_rented > 2
-        this_amount += (rental.days_rented - 2) * 1.5
+        result += (rental.days_rented - 2) * 1.5
       end
     when Movie.NEW_RELEASE
-      this_amount += rental.days_rented * 3.0
+      result += rental.days_rented * 3.0
     when Movie.CHILDRENS
-      this_amount += 1.5
+      result += 1.5
       if rental.days_rented > 3
-        this_amount += (rental.days_rented - 3) * 1.5
+        result += (rental.days_rented - 3) * 1.5
       end
     end
-    this_amount
+    result
   end
 end
