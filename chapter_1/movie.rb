@@ -1,7 +1,11 @@
 class Movie
-  @@CHILDRENS = 2
-  @@REGULAR = 0
-  @@NEW_RELEASE = 1
+  @CHILDRENS = 2
+  @REGULAR = 0
+  @NEW_RELEASE = 1
+
+  class << self
+    attr_accessor :CHILDRENS, :REGULAR, :NEW_RELEASE
+  end
 
   attr_reader :title
   attr_accessor :price_code
@@ -14,7 +18,6 @@ end
 
 class Rental
   attr_reader :movie, :days_rented
-
   def initialize(movie, days_rented)
     @movie = movie
     @days_rented = days_rented
@@ -41,22 +44,19 @@ class Customer
     while rentals.any?
       this_amount = 0
       each = rentals.shift
-
       case each.movie.price_code
       when Movie.REGULAR
-        this_amount += 2
+        this_amount += 2.0
         if each.days_rented > 2
           this_amount += (each.days_rented - 2) * 1.5
         end
-        break
       when Movie.NEW_RELEASE
-        this_amount += each.days_rented * 3
+        this_amount += each.days_rented * 3.0
       when Movie.CHILDRENS
         this_amount += 1.5
         if each.days_rented > 3
           this_amount += (each.days_rented - 3) * 1.5
         end
-        break
       end
       
       frequent_rental_points += 1
@@ -69,7 +69,7 @@ class Customer
       total_amount += this_amount
     end
 
-    result += "Amount owed is #{total_amoubt}\n"
+    result += "Amount owed is #{total_amount}\n"
     result += "You earned #{frequent_rental_points} frequent renter points"
     result
   end
