@@ -41,6 +41,14 @@ class Rental
     end
     result
   end
+
+  def get_points
+    if movie.price_code == Movie.NEW_RELEASE && days_rented > 1
+      2
+    else
+      1
+    end
+  end
 end
 
 class Customer
@@ -56,26 +64,26 @@ class Customer
   end
 
   def statement
-    total_amount = 0
-    frequent_rental_points = 0
     result = "Rental Record for #{name} \n"
 
-    while rentals.any?
-      each = rentals.shift
-      
-      frequent_rental_points += 1
-  
-      if each.movie.price_code == Movie.NEW_RELEASE && each.days_rented > 1
-        frequent_rental_points += 1
-      end
-      
-      this_amount = each.get_charge
-      result += "\t#{each.movie.title}\t#{this_amount}\n"
-      total_amount += this_amount
+    rentals.each do |each|    
+      result += "\t#{each.movie.title}\t#{each.get_charge}\n"
     end
 
-    result += "Amount owed is #{total_amount}\n"
-    result += "You earned #{frequent_rental_points} frequent renter points"
+    result += "Amount owed is #{get_total_charge}\n"
+    result += "You earned #{get_rental_points} frequent renter points"
     result
+  end
+
+  def get_total_charge
+    rentals.reduce(0) do |total, rental|
+      total + rental.get_charge
+    end
+  end
+
+  def get_rental_points
+    rentals.reduce(0) do |total, rental|
+      total + rental.get_points
+    end
   end
 end
