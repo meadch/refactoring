@@ -83,15 +83,31 @@ describe Customer do
         )
     end
 
-    it "can print a statement with a multiple rentals" do
-      @customer.add_rental(@nemo_rental)
-      @customer.add_rental(@forest_gump_rental)
-      @customer.add_rental(@baby_driver_rental)
+    context 'statements' do
+      it "can print a statement with multiple rentals" do
+        @customer.add_rental(@nemo_rental)
+        @customer.add_rental(@forest_gump_rental)
+        @customer.add_rental(@baby_driver_rental)
 
-      statement = @customer.statement
-      expect(statement).to eq(
-        "Rental Record for Charlie \n\tFinding Nemo\t3.0\n\tForest Gump\t8.0\n\tBaby Driver\t3.0\nAmount owed is 14.0\nYou earned 3 frequent renter points"
-        )
+        statement = @customer.statement
+        expect(statement).to eq(
+          "Rental Record for Charlie \n\tFinding Nemo\t3.0\n\tForest Gump\t8.0\n\tBaby Driver\t3.0\nAmount owed is 14.0\nYou earned 3 frequent renter points"
+          )
+      end
+
+      it "can print an HTML statement with multiple rentals" do
+        @customer.add_rental(@nemo_rental)
+        @customer.add_rental(@forest_gump_rental)
+        @customer.add_rental(@baby_driver_rental)
+
+        statement = @customer.html_statement
+        expect(statement).to eq(
+        "<h1>Rental Record for <em>Charlie</em></h1>\n"+
+        "<p>Finding Nemo: 3.0</p>\n" +
+        "<p>Forest Gump: 8.0</p>\n" +
+        "<p>Baby Driver: 3.0</p>\n" +
+        "<p>You owe 14.0 and earned 3 frequent renter points</p>\n")
+      end
     end
   end
 end
