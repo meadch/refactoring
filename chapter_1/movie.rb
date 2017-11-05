@@ -13,14 +13,14 @@ class Movie
 
   def initialize(title, code)
     @title = title
-    set_price_code(code)
+    set_price(code)
   end
 
   def price_code
     price.code
   end
 
-  def set_price_code(code)
+  def set_price(code)
     @price = case code
             when Movie.CHILDRENS
               ChildrenPrice
