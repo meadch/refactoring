@@ -1,3 +1,5 @@
+require_relative './price'
+
 class Movie
   @CHILDRENS = 2
   @REGULAR = 0
@@ -7,12 +9,34 @@ class Movie
     attr_accessor :CHILDRENS, :REGULAR, :NEW_RELEASE
   end
 
-  attr_reader :title
-  attr_accessor :price_code
+  attr_reader :title, :price
 
-  def initialize(title, price_code)
+  def initialize(title, code)
     @title = title
-    @price_code = price_code
+    set_price_code(code)
+  end
+
+  def price_code
+    price.code
+  end
+
+  def set_price_code(code)
+    @price = case code
+            when Movie.CHILDRENS
+              ChildrenPrice
+            when Movie.NEW_RELEASE
+              NewReleasePrice
+            when Movie.REGULAR
+              RegularPrice
+            end.new
+  end
+
+  def charge(days_rented)
+    price.get_charge(days_rented)
+  end
+
+  def points(days_rented)
+    price.get_points(days_rented)
   end
 end
 
@@ -24,30 +48,12 @@ class Rental
   end
 
   def get_charge
-    result = 0
-    case movie.price_code
-    when Movie.REGULAR
-      result += 2.0
-      if days_rented > 2
-        result += (days_rented - 2) * 1.5
-      end
-    when Movie.NEW_RELEASE
-      result += days_rented * 3.0
-    when Movie.CHILDRENS
-      result += 1.5
-      if days_rented > 3
-        result += (days_rented - 3) * 1.5
-      end
-    end
-    result
+    movie.charge(days_rented)
   end
 
   def get_points
-    if movie.price_code == Movie.NEW_RELEASE && days_rented > 1
-      2
-    else
-      1
-    end
+    movie.points(
+      days_rented)
   end
 end
 
