@@ -1,1 +1,4 @@
-# Refactoring in Ruby
+# Refactoring
+
+* [Ruby](./ruby)
+* [JavaScript](./javascript)
