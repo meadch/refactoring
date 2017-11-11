@@ -34,6 +34,21 @@ class Customer {
     )} frequent renter points.`
     return result
   }
+  htmlStatement() {
+    const rentals = internal(this).rentals
+    let result = `<h1>Rentals for <em> ${this.getName()} </em></h1>\n`
+
+    rentals.forEach(rental => {
+      result += `<p>${rental
+        .getMovie()
+        .getTitle()}: ${rental.getCharge()} </p>\n`
+    })
+    result += `<p>You owe <em>${getTotalCharge(rentals.slice())}</em></p>\n`
+    result += `<p><You earned <em>${getFrequentRenterPoints(
+      rentals.slice()
+    )}</em> frequent renter points</p>`
+    return result
+  }
 }
 
 function getTotalCharge(rentals, result = 0) {

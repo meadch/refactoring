@@ -25,3 +25,12 @@ test('customers can rent movies and get a proper receipt', () => {
   customer.addRental(kidsMovieRental2)
   expect(customer.statement()).toMatchSnapshot()
 })
+
+test('customers can rent movies and get a proper receipt in html format', () => {
+  const customer = new Customer('bob')
+  customer.addRental(firstRental)
+  customer.addRental(secondRental)
+  customer.addRental(kidsMovieRental)
+  customer.addRental(kidsMovieRental2)
+  expect(customer.htmlStatement()).toMatchSnapshot()
+})
