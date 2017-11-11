@@ -28,27 +28,7 @@ class Customer {
     let result = `Rental Record for ${this.getName()} \n`
 
     rentals.forEach(rental => {
-      let thisAmount = 0
-
-      switch (rental.getMovie().getPriceCode()) {
-        case Movie.REGULAR:
-          thisAmount += 2
-          if (rental.getDaysRented() > 2) {
-            thisAmount += (rental.getDaysRented() - 2) * 1.5
-          }
-          break
-        case Movie.NEW_RELEASE:
-          thisAmount += rental.getDaysRented() * 3
-          break
-        case Movie.CHILDREN:
-          thisAmount += 1.5
-          if (rental.getDaysRented() > 3) {
-            thisAmount += (rental.getDaysRented() - 3) * 1.5
-          }
-          break
-        default:
-          break
-      }
+      let thisAmount = amountFor(rental)
       frequentRenterPoints++
       if (
         rental.getMovie().getPriceCode() == Movie.NEW_RELEASE &&
@@ -57,7 +37,7 @@ class Customer {
         frequentRenterPoints++
       }
 
-      result += `\t ${rental.getMovie().getTitle()} \t ${thisAmount} + \n`
+      result += `\t ${rental.getMovie().getTitle()} \t ${thisAmount} \n`
       totalAmount += thisAmount
     })
     result += `Amount owed is: ${totalAmount}
@@ -66,4 +46,23 @@ class Customer {
   }
 }
 
+function amountFor(rental) {
+  let thisAmount = 0
+  switch (rental.getMovie().getPriceCode()) {
+    case Movie.REGULAR:
+      thisAmount += 2
+      if (rental.getDaysRented() > 2)
+        thisAmount += (rental.getDaysRented() - 2) * 1.5
+      break
+    case Movie.NEW_RELEASE:
+      thisAmount += rental.getDaysRented() * 3
+      break
+    case Movie.CHILDREN:
+      thisAmount += 1.5
+      if (rental.getDaysRented() > 3)
+        thisAmount += (rental.getDaysRented() - 3) * 1.5
+      break
+  }
+  return thisAmount
+}
 module.exports = Customer

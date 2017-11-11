@@ -2,10 +2,10 @@
 
 exports[`customers can rent movies and get a proper receipt 1`] = `
 "Rental Record for bob 
-	 silence of the lambs 	 2 + 
-	 freddy 	 12 + 
-	 Finding Nemo 	 1.5 + 
-	 Finding Nemo 2 	 7.5 + 
+	 silence of the lambs 	 2 
+	 freddy 	 12 
+	 Finding Nemo 	 1.5 
+	 Finding Nemo 2 	 7.5 
 Amount owed is: 23
     You earned 5 frequent renter points."
 `;

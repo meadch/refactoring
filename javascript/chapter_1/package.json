@@ -4,5 +4,8 @@
   },
   "scripts": {
     "test": "jest"
-  } 
+  },
+  "dependencies": {
+    "yarn": "^1.3.2"
+  }
 }
