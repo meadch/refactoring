@@ -28,7 +28,6 @@ class Customer {
     let result = `Rental Record for ${this.getName()} \n`
 
     rentals.forEach(rental => {
-      let thisAmount = rental.getCharge()
       frequentRenterPoints++
       if (
         rental.getMovie().getPriceCode() == Movie.NEW_RELEASE &&
@@ -36,9 +35,8 @@ class Customer {
       ) {
         frequentRenterPoints++
       }
-
-      result += `\t ${rental.getMovie().getTitle()} \t ${thisAmount} \n`
-      totalAmount += thisAmount
+      result += `\t ${rental.getMovie().getTitle()} \t ${rental.getCharge()} \n`
+      totalAmount += rental.getCharge()
     })
     result += `Amount owed is: ${totalAmount}
     You earned ${frequentRenterPoints} frequent renter points.`
