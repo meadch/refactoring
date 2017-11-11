@@ -40,6 +40,15 @@ class Rental {
     }
     return thisAmount
   }
+  frequentRenterPoints() {
+    if (
+      this.getMovie().getPriceCode() == Movie.NEW_RELEASE &&
+      this.getDaysRented() > 1
+    ) {
+      return 2
+    }
+    return 1
+  }
 }
 
 module.exports = Rental

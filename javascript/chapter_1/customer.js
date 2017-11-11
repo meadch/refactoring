@@ -28,13 +28,7 @@ class Customer {
     let result = `Rental Record for ${this.getName()} \n`
 
     rentals.forEach(rental => {
-      frequentRenterPoints++
-      if (
-        rental.getMovie().getPriceCode() == Movie.NEW_RELEASE &&
-        rental.getDaysRented() > 1
-      ) {
-        frequentRenterPoints++
-      }
+      frequentRenterPoints += rental.frequentRenterPoints()
       result += `\t ${rental.getMovie().getTitle()} \t ${rental.getCharge()} \n`
       totalAmount += rental.getCharge()
     })
