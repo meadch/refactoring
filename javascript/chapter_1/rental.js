@@ -22,32 +22,11 @@ class Rental {
     return internal(this).movie
   }
   getCharge() {
-    let thisAmount = 0
-    switch (this.getMovie().getPriceCode()) {
-      case Movie.REGULAR:
-        thisAmount += 2
-        if (this.getDaysRented() > 2)
-          thisAmount += (this.getDaysRented() - 2) * 1.5
-        break
-      case Movie.NEW_RELEASE:
-        thisAmount += this.getDaysRented() * 3
-        break
-      case Movie.CHILDREN:
-        thisAmount += 1.5
-        if (this.getDaysRented() > 3)
-          thisAmount += (this.getDaysRented() - 3) * 1.5
-        break
-    }
-    return thisAmount
+    return internal(this).movie.getCharge(this.getDaysRented())
   }
+
   frequentRenterPoints() {
-    if (
-      this.getMovie().getPriceCode() == Movie.NEW_RELEASE &&
-      this.getDaysRented() > 1
-    ) {
-      return 2
-    }
-    return 1
+    return internal(this).movie.frequentRenterPoints(this.getDaysRented())
   }
 }
 
