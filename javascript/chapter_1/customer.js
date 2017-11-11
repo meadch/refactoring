@@ -22,7 +22,6 @@ class Customer {
     return internal(this).name
   }
   statement() {
-    let totalAmount = 0
     let frequentRenterPoints = 0
     const rentals = internal(this).rentals
     let result = `Rental Record for ${this.getName()} \n`
@@ -30,12 +29,19 @@ class Customer {
     rentals.forEach(rental => {
       frequentRenterPoints += rental.frequentRenterPoints()
       result += `\t ${rental.getMovie().getTitle()} \t ${rental.getCharge()} \n`
-      totalAmount += rental.getCharge()
     })
-    result += `Amount owed is: ${totalAmount}
+    result += `Amount owed is: ${getTotalCharge(rentals)}
     You earned ${frequentRenterPoints} frequent renter points.`
     return result
   }
+}
+
+function getTotalCharge(rentals, result = 0) {
+  if (rentals.length === 0) {
+    return result
+  }
+  result += rentals.pop().getCharge()
+  return getTotalCharge(rentals, result)
 }
 
 module.exports = Customer
