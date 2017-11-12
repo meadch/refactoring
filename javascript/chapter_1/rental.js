@@ -1,4 +1,4 @@
-const Movie = require('./movie')
+const { Movie } = require('./movie')
 let map = new WeakMap()
 
 let internal = function(object) {

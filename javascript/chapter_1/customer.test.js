@@ -1,5 +1,5 @@
 const Customer = require('./customer')
-const Movie = require('./movie')
+const { Movie } = require('./movie')
 const Rental = require('./rental')
 
 const secondMovie = new Movie('freddy', 1)
