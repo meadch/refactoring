@@ -1,5 +1,5 @@
 const Customer = require('./customer')
-const Movie = require('./movie')
+const { Movie } = require('./movie')
 const Rental = require('./rental')
 
 const secondMovie = new Movie('freddy', 1)
@@ -24,4 +24,13 @@ test('customers can rent movies and get a proper receipt', () => {
   customer.addRental(kidsMovieRental)
   customer.addRental(kidsMovieRental2)
   expect(customer.statement()).toMatchSnapshot()
+})
+
+test('customers can rent movies and get a proper receipt in html format', () => {
+  const customer = new Customer('bob')
+  customer.addRental(firstRental)
+  customer.addRental(secondRental)
+  customer.addRental(kidsMovieRental)
+  customer.addRental(kidsMovieRental2)
+  expect(customer.htmlStatement()).toMatchSnapshot()
 })

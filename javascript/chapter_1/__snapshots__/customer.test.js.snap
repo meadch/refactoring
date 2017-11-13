@@ -2,10 +2,20 @@
 
 exports[`customers can rent movies and get a proper receipt 1`] = `
 "Rental Record for bob 
-	 silence of the lambs 	 2 + 
-	 freddy 	 12 + 
-	 Finding Nemo 	 1.5 + 
-	 Finding Nemo 2 	 7.5 + 
+	 silence of the lambs 	 2 
+	 freddy 	 12 
+	 Finding Nemo 	 1.5 
+	 Finding Nemo 2 	 7.5 
 Amount owed is: 23
     You earned 5 frequent renter points."
+`;
+
+exports[`customers can rent movies and get a proper receipt in html format 1`] = `
+"<h1>Rentals for <em> bob </em></h1>
+<p>silence of the lambs: 2 </p>
+<p>freddy: 12 </p>
+<p>Finding Nemo: 1.5 </p>
+<p>Finding Nemo 2: 7.5 </p>
+<p>You owe <em>23</em></p>
+<p><You earned <em>5</em> frequent renter points</p>"
 `;

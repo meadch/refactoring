@@ -1,5 +1,5 @@
 const Rental = require('./rental')
-const Movie = require('./movie')
+const { Movie } = require('./movie')
 
 test('can create a rental', () => {
   const firstMovie = new Movie('silence of the lambs', 2)

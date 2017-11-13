@@ -1,4 +1,4 @@
-const Movie = require('./movie')
+const { Movie } = require('./movie')
 let map = new WeakMap()
 
 let internal = function(object) {
@@ -20,6 +20,13 @@ class Rental {
   }
   getMovie() {
     return internal(this).movie
+  }
+  getCharge() {
+    return internal(this).movie.getCharge(this.getDaysRented())
+  }
+
+  frequentRenterPoints() {
+    return internal(this).movie.frequentRenterPoints(this.getDaysRented())
   }
 }
 

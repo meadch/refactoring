@@ -1,5 +1,5 @@
 // Explicit to this module
-const Movie = require('./movie')
+
 let map = new WeakMap()
 let internal = function(object) {
   if (!map.has(object)) map.set(object, {})
@@ -22,48 +22,49 @@ class Customer {
     return internal(this).name
   }
   statement() {
-    let totalAmount = 0
-    let frequentRenterPoints = 0
     const rentals = internal(this).rentals
     let result = `Rental Record for ${this.getName()} \n`
 
     rentals.forEach(rental => {
-      let thisAmount = 0
-
-      switch (rental.getMovie().getPriceCode()) {
-        case Movie.REGULAR:
-          thisAmount += 2
-          if (rental.getDaysRented() > 2) {
-            thisAmount += (rental.getDaysRented() - 2) * 1.5
-          }
-          break
-        case Movie.NEW_RELEASE:
-          thisAmount += rental.getDaysRented() * 3
-          break
-        case Movie.CHILDREN:
-          thisAmount += 1.5
-          if (rental.getDaysRented() > 3) {
-            thisAmount += (rental.getDaysRented() - 3) * 1.5
-          }
-          break
-        default:
-          break
-      }
-      frequentRenterPoints++
-      if (
-        rental.getMovie().getPriceCode() == Movie.NEW_RELEASE &&
-        rental.getDaysRented() > 1
-      ) {
-        frequentRenterPoints++
-      }
-
-      result += `\t ${rental.getMovie().getTitle()} \t ${thisAmount} + \n`
-      totalAmount += thisAmount
+      result += `\t ${rental.getMovie().getTitle()} \t ${rental.getCharge()} \n`
     })
-    result += `Amount owed is: ${totalAmount}
-    You earned ${frequentRenterPoints} frequent renter points.`
+    result += `Amount owed is: ${getTotalCharge(rentals.slice())}
+    You earned ${getFrequentRenterPoints(
+      rentals.slice()
+    )} frequent renter points.`
     return result
   }
+  htmlStatement() {
+    const rentals = internal(this).rentals
+    let result = `<h1>Rentals for <em> ${this.getName()} </em></h1>\n`
+
+    rentals.forEach(rental => {
+      result += `<p>${rental
+        .getMovie()
+        .getTitle()}: ${rental.getCharge()} </p>\n`
+    })
+    result += `<p>You owe <em>${getTotalCharge(rentals.slice())}</em></p>\n`
+    result += `<p><You earned <em>${getFrequentRenterPoints(
+      rentals.slice()
+    )}</em> frequent renter points</p>`
+    return result
+  }
+}
+
+function getTotalCharge(rentals, result = 0) {
+  if (rentals.length === 0) {
+    return result
+  }
+  result += rentals.pop().getCharge()
+  return getTotalCharge(rentals, result)
+}
+
+function getFrequentRenterPoints(rentals, result = 0) {
+  if (rentals.length === 0) {
+    return result
+  }
+  result += rentals.pop().frequentRenterPoints()
+  return getFrequentRenterPoints(rentals, result)
 }
 
 module.exports = Customer
